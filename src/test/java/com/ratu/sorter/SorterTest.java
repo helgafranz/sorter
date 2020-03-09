@@ -3,11 +3,22 @@
  */
 package com.ratu.sorter;
 
+import com.ratu.sorter.domain.Person;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class SorterTest {
-    @Test public void testSomeLibraryMethod() {
+
+    @Test
+    public void testSomeLibraryMethod() {
         assertTrue("dummy test", true);
     }
+
+    @Test
+    public void testShouldReturnPerson() {
+        Person person = Sorter.generatePerson("given name last");
+        assertEquals("given name", person.getGivenName());
+        assertEquals("last", person.getLastName());
+    }
+
 }

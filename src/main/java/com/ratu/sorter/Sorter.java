@@ -2,9 +2,7 @@ package com.ratu.sorter;
 
 import com.ratu.sorter.domain.Person;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +11,20 @@ public class Sorter {
 
     public static void main(String[] args) {
         List<Person> people = readPeopleFromFile(args[0]);
-        System.out.println(people);
+        Collections.sort(people);
+        writeSortedListToFileAndConsole(people);
+    }
+
+    public static void writeSortedListToFileAndConsole(List<Person> people) {
+        try (BufferedWriter bw =
+                     new BufferedWriter(new FileWriter("./sorted-names-list.txt"))) {
+            for (Person person : people) {
+                System.out.println(person);
+                bw.write(person.toString() + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static List<Person> readPeopleFromFile(String path) {

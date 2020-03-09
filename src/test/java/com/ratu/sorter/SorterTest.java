@@ -3,45 +3,28 @@
  */
 package com.ratu.sorter;
 
+
 import com.ratu.sorter.domain.Person;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class SorterTest {
-
     @Test
-    public void testShouldReturnPerson() {
-        Person person = Sorter.generatePerson("given name last");
-        assertEquals("given name", person.getGivenName());
-        assertEquals("last", person.getLastName());
-    }
+    public void testShouldReadNamesFromFileAndSortThemAndWriteToConsoleAndFile() {
+        Sorter.main(new String[]{"./test-names-list.txt"});
 
-
-    @Test
-    public void testShouldReadNamesFromFileAndReturnListOfPerson() {
-        List<Person> actualPeople = Sorter.readPeopleFromFile("./test-names-list.txt");
         List<Person> expectedPeople = new ArrayList<>();
-        expectedPeople.add(new Person("Iddins", "Orson Milka"));
         expectedPeople.add(new Person("Battelle", "Erna Dorey"));
         expectedPeople.add(new Person("Franzel", "Flori Chaunce"));
+        expectedPeople.add(new Person("Iddins", "Orson Milka"));
 
-        assertEquals(0, expectedPeople.toString().compareTo(actualPeople.toString()));
+        IOUtil ioUtil = new IOUtil();
+        List<Person> actualPeople = ioUtil.readPeopleFromFile("./sorted-names-list.txt");
+
+        assertEquals( expectedPeople.toString(),actualPeople.toString());
     }
-
-    @Test
-    public void testShouldRightToFile() {
-        List<Person> people = new ArrayList<>();
-        people.add(new Person("Iddins", "Orson Milka"));
-        people.add(new Person("Battelle", "Erna Dorey"));
-
-        Sorter.writeSortedListToFileAndConsole(people);
-
-        List<Person> actualPeople = Sorter.readPeopleFromFile("./sorted-names-list.txt");
-        assertEquals(0, people.toString().compareTo(actualPeople.toString()));
-    }
-
 }
